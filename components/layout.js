@@ -177,7 +177,9 @@ export class UserMenu extends React.Component {
               <div className="dropdown-item p-0">
                 <Form id="signout" method="post" action="/auth/signout" onSubmit={this.handleSignoutSubmit}>
                   <input name="_csrf" type="hidden" value={this.props.session.csrfToken}/>
-                  <Button type="submit" block className="pl-4 rounded-0 text-left dropdown-item"><span className="icon ion-md-log-out mr-1"></span> Sign out</Button>
+                  <Button type="submit" block className="pl-4 rounded-0 text-left dropdown-item">
+                    <span className="icon ion-md-log-out mr-1"></span> Sign out
+                  </Button>
                 </Form>
               </div>
             </div>
@@ -198,7 +200,13 @@ export class UserMenu extends React.Component {
               * so that users without JavaScript are also redirected to the page
               * they were on before they signed in.
               **/}
-            <a href="/auth?redirect=/" className="btn btn-outline-primary" onClick={this.props.toggleModal}><span className="icon ion-md-log-in mr-1"></span> Sign up / Sign in</a>
+            <a
+              href="/auth?redirect=/"
+              className="btn btn-outline-primary"
+              onClick={this.props.toggleModal}
+            >
+              <span className="icon ion-md-log-in mr-1"></span> Sign in
+            </a>
           </NavItem>
         </Nav>
       );
@@ -228,7 +236,7 @@ export class SigninModal extends React.Component {
 
     return (
       <Modal isOpen={this.props.modal} toggle={this.props.toggleModal} style={{maxWidth: 700}}>
-        <ModalHeader>Sign up / Sign in</ModalHeader>
+        <ModalHeader>Sign in</ModalHeader>
         <ModalBody style={{padding: '1em 2em'}}>
           <Signin session={this.props.session} providers={this.props.providers}/>
         </ModalBody>
