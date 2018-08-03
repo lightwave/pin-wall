@@ -4,6 +4,10 @@ const next = require('next');
 const nextAuth = require('next-auth');
 const nextAuthConfig = require('./next-auth.config');
 
+// Configure mongoose mongo-db connection
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_URI || 'http://localhost:27017/pin-wall');
+
 const routes = {
   admin:  require('./routes/admin'),
   account:  require('./routes/account')
