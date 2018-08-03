@@ -65,7 +65,7 @@ export default class extends Page {
     const totalSize = (this.state.data && this.state.data.total) ? this.state.data.total : 0;
 ;
     return (
-      <Layout {...this.props} navmenu={false}>
+      <Layout {...this.props}>
         <h1 className="display-4">Administration</h1>
         <p className="lead text-muted ">
           This is an example read-only admin page which lists user accounts.
