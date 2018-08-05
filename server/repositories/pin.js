@@ -29,6 +29,24 @@ class PinRepository {
       .exec();
   }
 
+  async create(userId, sourceUrl) {
+    const result = await Pin.create({ user: userId, sourceUrl });
+    console.log('Mongoose create result', result);
+    return result;
+  }
+
+  async delete(userId, pinId) {
+    const result = await Pin.deleteOne({ _id: pinId, user: userId });
+    const { n, ok } = result;
+    if (n !== 1) {
+      console.error('Failed to delete ', pinId, 'for', userId);
+      throw new Error(`Failed to delete pin ${pinId} for user ${userId}`);
+    } else {
+      return {
+        pin: { _id: pinId },
+      };
+    }
+  }
 }
 
 module.exports = PinRepository;

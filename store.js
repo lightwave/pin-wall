@@ -25,8 +25,26 @@ export const reducer = handleActions(
 
     ADD_LINK: (state, action) => ({
       ...state,
-      currentPins: [action.payload].concat(state.currentPins), // TODO: Not efficient but that'd do for now.
+      currentPins: state.currentPins.unshift(action.payload.pin),
     }),
+
+    DELETE_USER_PIN: (state, action) => {
+      console.log(action);
+      if (!action.error && !action.payload.error) {
+        const id = action.payload.pin._id;
+        const index = state.currentPins.findIndex(v => v._id == id);
+        if (index >= 0) {
+          return {
+            ...state,
+            currentPins: state.currentPins.delete(index),
+          };
+        }
+      } else {
+        // TODO: handle error of delete
+        console.error('Error deleting', action.payload);
+      }
+      return state;
+    },
 
     RESET: (state, action) => ({...defaultInitialState}),
   },

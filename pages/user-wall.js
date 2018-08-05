@@ -16,12 +16,12 @@ class UserWall extends Page {
     }
   }
 
-  handleDeleteUserPin = async (pinId, e) => {
-    return {};
+  handleDeleteUserPin = async (pinId) => {
+    this.props.deleteUserPin(pinId, this.props.session.csrfToken);
   }
 
-  handleSaveUserPin = async (sourceUrl, e) => {
-    return {};
+  handleSaveUserPin = async (sourceUrl) => {
+    this.props.saveUserPin(sourceUrl, this.props.session.csrfToken);
   }
 
   render() {
@@ -29,8 +29,9 @@ class UserWall extends Page {
 
     return (
       <Layout title="Image Wall" session={session}>
+        <AddLinkCard session={session} />
         {currentPins && currentPins.map(pin => (
-          (pin.user === session.user.id)
+          (session && session.user && pin.user === session.user.id)
             ? <ImageCard
                 key={pin._id}
                 pinId={pin._id}
@@ -56,6 +57,8 @@ function mapStateToProps({ currentPins }) {
 
 const mapDispatchToProps = {
   getUserPins: actions.getUserPins,
+  saveUserPin: actions.saveUserPin,
+  deleteUserPin: actions.deleteUserPin,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserWall));

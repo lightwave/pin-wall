@@ -6,6 +6,8 @@ const Pin = require('../models/pin');
 const repo = new Repo();
 
 const wallController = require('../controllers/wall');
+const pinController = require('../controllers/pin');
+
 
 module.exports = (express, expressApp, nextApp) => {
 
@@ -30,5 +32,13 @@ module.exports = (express, expressApp, nextApp) => {
   //
   // Return an array of pins for a user
   router.route('/user/:id/pins').get(wallController.getUserPins);
+
+  // POST /api/pin
+  // Add new pin/link
+  router.post('/pin', pinController.create);
+
+  // DELETE /api/pin/:id
+  // Add new pin/link
+  router.delete('/pin/:id', pinController.delete);
 };
 
