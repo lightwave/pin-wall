@@ -12,6 +12,7 @@
     "connect-mongo": "^2.0.1",
     "dotenv": "^6.0.0",
     "express-session": "^1.15.5",
+    "immutable": "^3.8.2",
     "ionicons": "^4.2.4",
     "isomorphic-fetch": "^2.2.1",
     "isomorphic-unfetch": "^2.1.1",
