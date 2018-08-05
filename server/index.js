@@ -10,8 +10,9 @@ mongoose.connect(process.env.MONGO_URI || 'http://localhost:27017/pin-wall');
 
 const routes = {
   admin:  require('./routes/admin'),
-  account:  require('./routes/account')
-}
+  account:  require('./routes/account'),
+  pinApi: require('./routes/pin-api')
+};
 
 // Load environment variables from .env file if present
 require('dotenv').load();
@@ -59,6 +60,9 @@ nextApp
 
   // Add account management route - reuses functions defined for NextAuth
   routes.account(expressApp, nextAuthOptions.functions);
+
+  // Add pin-api routes
+  routes.pinApi(express, expressApp, nextApp);
 
   // Serve fonts from ionicon npm module
   expressApp.use('/fonts/ionicons', express.static('./node_modules/ionicons/dist/fonts'));
