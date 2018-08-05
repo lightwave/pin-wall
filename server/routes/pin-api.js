@@ -25,5 +25,10 @@ module.exports = (express, expressApp, nextApp) => {
   //   count: # of pins user has
   // }
   router.route('/wall').get(wallController.getUserWallInfo);
+
+  // GET /api/user/:id/pins
+  //
+  // Return an array of pins for a user
+  router.route('/user/:id/pins').get(wallController.getUserPins);
 };
 

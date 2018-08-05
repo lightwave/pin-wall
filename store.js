@@ -6,6 +6,7 @@ import promiseMiddleware from 'redux-promise';
 
 const defaultInitialState = {
   userWallInfos: [],
+  currentPins: [],
 };
 
 // REDUCERS
@@ -14,6 +15,11 @@ export const reducer = handleActions(
     GET_USER_WALL_INFOS: (state, action) => ({
       ...state,
       userWallInfos: action.payload,
+    }),
+
+    GET_USER_PINS: (state, action) => ({
+      ...state,
+      currentPins: action.payload,
     }),
 
     RESET: (state, action) => ({...defaultInitialState}),

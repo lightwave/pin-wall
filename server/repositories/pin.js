@@ -3,6 +3,11 @@ const Pin = require('../models/pin');
 
 class PinRepository {
 
+  async getUserPins(userId) {
+    const pins = await Pin.find({ user: userId });
+    return pins;
+  }
+
   async getUserWallInfo() {
     return await Pin.aggregate()
       .group({
