@@ -8,12 +8,27 @@ const repo = new Repo();
 const wallController = require('../controllers/wall');
 const pinController = require('../controllers/pin');
 
+function isAuthenticated(req, res, next) {
+  if (!req.user) {
+    res.sendStatus(403);
+  } else {
+    // TODO: Validate access code
+    next();
+  }
+}
 
 module.exports = (express, expressApp, nextApp) => {
 
   if (express === null || expressApp === null) {
     throw new error('expressApp option must be an express server instance');
   }
+
+  // URL rewrite
+  expressApp.get('/user/:userId/wall', (req, res) => {
+    const actualPage = '/user-wall';
+    const queryParams = { userId: req.params.userId };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
 
   // Configure router for pin-wall API
   const router = express.Router();

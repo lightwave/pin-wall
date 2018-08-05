@@ -6,6 +6,7 @@ import Page from '../components/page';
 import ImageCard from '../components/image-card';
 import Layout from '../components/layout';
 import actions from '../actions';
+import AddLinkCard from '../containers/add-link-card';
 
 class UserWall extends Page {
   componentDidMount() {

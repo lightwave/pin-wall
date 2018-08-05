@@ -4,7 +4,7 @@ const Pin = require('../models/pin');
 class PinRepository {
 
   async getUserPins(userId) {
-    const pins = await Pin.find({ user: userId });
+    const pins = await Pin.find({ user: userId }, null, { sort: { updatedAt: -1 } });
     return pins;
   }
 

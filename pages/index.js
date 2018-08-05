@@ -8,6 +8,7 @@ import { Card, CardImg, CardTitle, CardText } from 'reactstrap';
 import Page from '../components/page';
 import Layout from '../components/layout';
 import actions from '../actions';
+import AddLinkCard from '../containers/add-link-card';
 
 class Home extends Page {
   componentDidMount() {
@@ -15,14 +16,21 @@ class Home extends Page {
   }
 
   render() {
-    const { session: { user }, userWallInfos } = this.props;
-
-    if (!userWallInfos) return null;
+    const { session, userWallInfos } = this.props;
+    const signedIn = !!session.user;
 
     return (
       <Layout {...this.props} container={false}>
         <Container>
-          {userWallInfos.map(info => <WallCover key={info._id} {...info} />)}
+          {signedIn &&
+            <AddLinkCard
+              style={{ marginTop: 16, marginBottom: 16 }}
+              session={session}
+            />
+          }
+          <hr />
+          <h1>User's walls</h1>
+          {userWallInfos && userWallInfos.map(info => <WallCover key={info._id} {...info} />)}
         </Container>
       </Layout>
     );
