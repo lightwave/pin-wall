@@ -54,7 +54,17 @@ export const reducer = handleActions(
 export function initializeStore(initialState = defaultInitialState) {
   return createStore(
     reducer,
-    initialState,
+    // initialState,
+    /*
+      Immutable.js from SSR redux state does not work. An Immutable.js List will
+      be re-hyrdraed as a plain JS array on the client side. This cause incompatible
+      type in the downstream code path.
+
+      Need further investigation to find out why.
+
+      For now, force the use of defaultInitialState on the client side.
+     */
+    defaultInitialState,
     composeWithDevTools(applyMiddleware(promiseMiddleware, thunkMiddleware))
   );
 }
