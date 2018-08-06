@@ -13,7 +13,6 @@ exports.create = async (req, res) => {
     res.sendStatus(400); // Bad request
   } else {
     try {
-      console.log('Creating pin for ', req.user.id, req.body.sourceUrl);
       const pin = await pinInteractor.create(req.user.id, req.body.sourceUrl);
       res.json({pin});
     } catch (err) {
@@ -41,7 +40,6 @@ exports.delete = async (req, res) => {
 };
 
 exports.resolveTinyUrl = async (req, res) => {
-  console.log('resolveTinyUrl');
   const hash = req.params.hash;
   const url = await pinInteractor.resolveTinyUrl(hash);
   res.redirect(url);

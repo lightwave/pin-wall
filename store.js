@@ -8,6 +8,7 @@ import { List, Map } from 'immutable';
 const defaultInitialState = {
   userWallInfos: [],
   currentPins: List(),
+  hasMorePins: false,
 };
 
 // REDUCERS
@@ -18,10 +19,17 @@ export const reducer = handleActions(
       userWallInfos: action.payload,
     }),
 
-    GET_USER_PINS: (state, action) => ({
-      ...state,
-      currentPins: List(action.payload),
-    }),
+    GET_USER_PINS: (state, action) => {
+      const pins = action.payload.pins;
+      const hasMorePins = !!action.payload.nextCursor;
+
+      return ({
+        ...state,
+        currentPins: state.currentPins.concat(List(pins)),
+        hasMorePins,
+        nextCursor: action.payload.nextCursor,
+      });
+    },
 
     ADD_LINK: (state, action) => ({
       ...state,
@@ -29,7 +37,6 @@ export const reducer = handleActions(
     }),
 
     DELETE_USER_PIN: (state, action) => {
-      console.log(action);
       if (!action.error && !action.payload.error) {
         const id = action.payload.pin._id;
         const index = state.currentPins.findIndex(v => v._id == id);

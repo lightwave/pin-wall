@@ -21,7 +21,6 @@ class TinyUrlModal extends React.Component {
   }
 
   copyToClipboard = () => {
-    console.log(this.url.current.value);
     const domUrl = this.url.current;
     domUrl.select();
     document.execCommand('copy');

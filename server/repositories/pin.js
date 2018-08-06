@@ -3,9 +3,31 @@ const Pin = require('../models/pin');
 
 class PinRepository {
 
-  async getUserPins(userId) {
-    const pins = await Pin.find({ user: userId }, null, { sort: { updatedAt: -1 } });
-    return pins;
+  async getUserPins(userId, pageSize, startCursor) {
+    const conditions = {
+      user: userId
+    };
+
+    if (startCursor) {
+      conditions._id = { $lte: startCursor }; // Resume from after the cursor 'startCursor'
+    }
+
+    let query = Pin.find(conditions).sort({ _id: -1 });
+    if (pageSize) {
+      query = query.limit(pageSize + 1);
+    };
+
+    const pins = await query.exec();
+    const result = {};
+
+    if (pageSize && pins.length > pageSize) {
+      result.nextCursor = pins[pins.length-1]._id;
+      pins.pop();
+    }
+
+    result.pins = pins;
+
+    return result;
   }
 
   async getUserWallInfo() {
@@ -30,9 +52,7 @@ class PinRepository {
   }
 
   async create(userId, sourceUrl) {
-    const result = await Pin.create({ user: userId, sourceUrl });
-    console.log('Mongoose create result', result);
-    return result;
+    return await Pin.create({ user: userId, sourceUrl });
   }
 
   async delete(userId, pinId) {
