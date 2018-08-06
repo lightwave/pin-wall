@@ -1,10 +1,5 @@
 'use strict';
 
-const Repo = require('../repositories/pin');
-const Pin = require('../models/pin');
-
-const repo = new Repo();
-
 const wallController = require('../controllers/wall');
 const pinController = require('../controllers/pin');
 
@@ -29,6 +24,8 @@ module.exports = (express, expressApp, nextApp) => {
     const queryParams = { userId: req.params.userId };
     nextApp.render(req, res, actualPage, queryParams);
   });
+
+  expressApp.get('/img/:hash', pinController.resolveTinyUrl);
 
   // Configure router for pin-wall API
   const router = express.Router();

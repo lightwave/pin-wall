@@ -39,3 +39,10 @@ exports.delete = async (req, res) => {
     }
   }
 };
+
+exports.resolveTinyUrl = async (req, res) => {
+  console.log('resolveTinyUrl');
+  const hash = req.params.hash;
+  const url = await pinInteractor.resolveTinyUrl(hash);
+  res.redirect(url);
+};

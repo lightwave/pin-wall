@@ -47,6 +47,10 @@ class PinRepository {
       };
     }
   }
+
+  async findById(id) {
+    return await Pin.findById(id);
+  }
 }
 
 module.exports = PinRepository;
