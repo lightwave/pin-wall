@@ -16,6 +16,7 @@ class UserWall extends Page {
   componentDidMount() {
     const { router: { query: { userId } } } = this.props;
     if (userId) {
+      this.props.resetState();
       this.props.getUserPins(userId, PAGE_SIZE);
     }
   }
@@ -70,13 +71,14 @@ class UserWall extends Page {
 }
 
 function mapStateToProps({ currentPins, hasMorePins, nextCursor }) {
-  return { currentPins, hasMorePins, nextCursor };
+  return { currentPins: currentPins.toJS(), hasMorePins, nextCursor };
 }
 
 const mapDispatchToProps = {
   getUserPins: actions.getUserPins,
   saveUserPin: actions.saveUserPin,
   deleteUserPin: actions.deleteUserPin,
+  resetState: actions.reset,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserWall));
